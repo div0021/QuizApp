@@ -43,8 +43,11 @@ const App = () => {
   };
   return (
     <>
-      <div className="font-medium bg-cover bg-no-repeat bg-[url('background.png')] w-[100dvw] h-[100dvh] flex justify-center items-center flex-col space-y-2 font-poppins">
-        <h1 className="w-80 text-2xl font-bold text-white">Country Quiz</h1>
+      <div className="font-medium w-[100dvw] h-[100dvh] flex justify-center items-center flex-col space-y-2 font-poppins relative">
+
+       <img src="background.png" alt="background" className="absolute w-[100dvw] h-[100dvh]" />
+
+        <h1 className="w-80 text-2xl font-bold text-white relative z-10">Country Quiz</h1>
         <div
           className={cn(
             "bg-white w-80 min-h-[25rem] rounded-xl transition-all duration-500 ease-in-out relative",
