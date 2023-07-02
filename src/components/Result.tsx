@@ -6,6 +6,7 @@ const Result: React.FC<ResultProps> = ({ counter, restart }) => {
   return (
     <div className="w-full flex flex-col justify-center space-y-12 items-center p-5">
       <img src="undraw_winners_ao2o.svg" alt="Winner" />
+
       <div className="space-y-3">
         <h1 className="text-4xl font-bold text-[#1d355d] text-center">
           Result
