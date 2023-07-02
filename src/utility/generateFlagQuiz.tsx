@@ -1,22 +1,22 @@
-import { CapCountryProps } from "../App";
+import { FlCountryProps } from "../App";
 
-export interface GenerateQuizReturn {
-  mainData: CapCountryProps[];
+export interface GenerateFlagQuizReturn {
+  mainData: FlCountryProps[];
   options: string[];
-  correctOption: CapCountryProps;
+  correctOption: FlCountryProps;
 }
 
 const generateRandomNumber = (num: number): number =>
   Math.round(Math.random() * num);
 
-const generateQuiz = (data: CapCountryProps[]): GenerateQuizReturn => {
+const generateFlagQuiz = (data: FlCountryProps[]): GenerateFlagQuizReturn => {
   if (data.length > 3) {
     let num = generateRandomNumber(data.length);
 
     const quizData = data[num];
     data = data.filter(
       (el) =>
-        (el && el.capital) !== (quizData && quizData.capital) &&
+        (el && el.flagUrl) !== (quizData && quizData.flagUrl) &&
         (el && el.country) !== (quizData && quizData.country)
     );
     const mainData = [...data];
@@ -27,7 +27,7 @@ const generateQuiz = (data: CapCountryProps[]): GenerateQuizReturn => {
       optionData.push(data[num] ? data[num].country : undefined);
       data = data.filter(
         (el) =>
-          (el && el.capital) !== (quizOption && quizOption.capital) &&
+          (el && el.flagUrl) !== (quizOption && quizOption.flagUrl) &&
           (el && el.country) !== (quizOption && quizOption.country)
       );
     }
@@ -42,4 +42,4 @@ const generateQuiz = (data: CapCountryProps[]): GenerateQuizReturn => {
   }
   return { mainData: data, options: [], correctOption: {} };
 };
-export default generateQuiz;
+export default generateFlagQuiz;

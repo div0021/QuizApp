@@ -1,11 +1,12 @@
 import { useState, MouseEvent, useRef } from "react";
 import cn from "../utility/cn";
-import generateQuiz, { GenerateQuizReturn } from "../utility/generateQuiz";
 import Result from "./Result";
-import { useNavigate } from "react-router-dom";
 import QuizOptions from "./QuizOptions";
 import { v4 } from "uuid";
 import { useQuiz } from "../utility/useQuiz";
+import generateCurrencyQuiz, {
+  GenerateCurrencyQuizReturn,
+} from "../utility/generateCurrencyQuiz";
 interface Choosen {
   isSelected: boolean;
   red: boolean;
@@ -28,8 +29,8 @@ interface FullInfoProps {
   ref: React.RefObject<HTMLDivElement>;
 }
 
-const CapitalQuiz = () => {
-  const { quizData, isRight, handleIsRight, counter, handleCounter } =
+const CurrencyQuiz = () => {
+  const { currencyQuizData, isRight, handleIsRight, counter, handleCounter } =
     useQuiz();
   const [active, setActive] = useState<ActiveProps>({
     a: {
@@ -53,15 +54,15 @@ const CapitalQuiz = () => {
       isSelected: false,
     },
   });
-  const navigat = useNavigate();
   const ref1 = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLDivElement>(null);
   const ref3 = useRef<HTMLDivElement>(null);
   const ref4 = useRef<HTMLDivElement>(null);
 
-  const [data, setData] = useState<GenerateQuizReturn>(quizData);
+  const [data, setData] =
+    useState<GenerateCurrencyQuizReturn>(currencyQuizData);
 
-  quizData && !data && setData(quizData);
+  currencyQuizData && !data && setData(currencyQuizData);
 
   const options: string[] | undefined =
     data &&
@@ -113,12 +114,8 @@ const CapitalQuiz = () => {
     });
     handleIsRight(false);
     handleCounter(0);
-    if (data.mainData.length > 3) {
-      setData(generateQuiz(data.mainData));
-      setOptionFormat(generateRandomOptions());
-    } else {
-      navigat(0);
-    }
+    setData(currencyQuizData);
+    setOptionFormat(generateRandomOptions());
   };
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
@@ -200,7 +197,7 @@ const CapitalQuiz = () => {
   };
 
   const handleButtonClick = () => {
-    setData(generateQuiz(data.mainData));
+    setData(generateCurrencyQuiz(data.mainData));
     handleIsRight(false);
     setActive({
       a: {
@@ -271,7 +268,7 @@ const CapitalQuiz = () => {
       {!(isRight === null) ? (
         <div className="w-full p-5 space-y-5">
           <h1 className="text-[#2f527b] font-bold text-lg">
-            {data?.correctOption.capital} is capital of
+            {data?.correctOption.currencySymbol} is currency of
           </h1>
           <div
             className={cn("bg-transparent space-y-5", {
@@ -314,4 +311,4 @@ const CapitalQuiz = () => {
   );
 };
 
-export default CapitalQuiz;
+export default CurrencyQuiz;

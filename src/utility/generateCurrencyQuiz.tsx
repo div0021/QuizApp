@@ -1,23 +1,25 @@
-import { CapCountryProps } from "../App";
+import { CurCountryProps } from "../App";
 
-export interface GenerateQuizReturn {
-  mainData: CapCountryProps[];
+export interface GenerateCurrencyQuizReturn {
+  mainData: CurCountryProps[];
   options: string[];
-  correctOption: CapCountryProps;
+  correctOption: CurCountryProps;
 }
 
 const generateRandomNumber = (num: number): number =>
   Math.round(Math.random() * num);
 
-const generateQuiz = (data: CapCountryProps[]): GenerateQuizReturn => {
+const generateCurrencyQuiz = (
+  data: CurCountryProps[]
+): GenerateCurrencyQuizReturn => {
   if (data.length > 3) {
     let num = generateRandomNumber(data.length);
 
     const quizData = data[num];
     data = data.filter(
       (el) =>
-        (el && el.capital) !== (quizData && quizData.capital) &&
-        (el && el.country) !== (quizData && quizData.country)
+        el.currencySymbol !== quizData.currencySymbol &&
+        el.country !== quizData.country
     );
     const mainData = [...data];
     const optionData: (string | undefined)[] = [];
@@ -27,8 +29,8 @@ const generateQuiz = (data: CapCountryProps[]): GenerateQuizReturn => {
       optionData.push(data[num] ? data[num].country : undefined);
       data = data.filter(
         (el) =>
-          (el && el.capital) !== (quizOption && quizOption.capital) &&
-          (el && el.country) !== (quizOption && quizOption.country)
+          (el && el.currencySymbol) !==
+          (quizOption && quizOption.currencySymbol)
       );
     }
     const syncOptionData = optionData.filter(
@@ -42,4 +44,4 @@ const generateQuiz = (data: CapCountryProps[]): GenerateQuizReturn => {
   }
   return { mainData: data, options: [], correctOption: {} };
 };
-export default generateQuiz;
+export default generateCurrencyQuiz;

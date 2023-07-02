@@ -1,11 +1,13 @@
 import { useState, MouseEvent, useRef } from "react";
 import cn from "../utility/cn";
-import generateQuiz, { GenerateQuizReturn } from "../utility/generateQuiz";
 import Result from "./Result";
 import { useNavigate } from "react-router-dom";
 import QuizOptions from "./QuizOptions";
 import { v4 } from "uuid";
 import { useQuiz } from "../utility/useQuiz";
+import generateFlagQuiz, {
+  GenerateFlagQuizReturn,
+} from "../utility/generateFlagQuiz";
 interface Choosen {
   isSelected: boolean;
   red: boolean;
@@ -28,8 +30,8 @@ interface FullInfoProps {
   ref: React.RefObject<HTMLDivElement>;
 }
 
-const CapitalQuiz = () => {
-  const { quizData, isRight, handleIsRight, counter, handleCounter } =
+const FlagQuiz = () => {
+  const { flagQuizData, isRight, handleIsRight, counter, handleCounter } =
     useQuiz();
   const [active, setActive] = useState<ActiveProps>({
     a: {
@@ -53,15 +55,15 @@ const CapitalQuiz = () => {
       isSelected: false,
     },
   });
+
   const navigat = useNavigate();
   const ref1 = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLDivElement>(null);
   const ref3 = useRef<HTMLDivElement>(null);
   const ref4 = useRef<HTMLDivElement>(null);
+  const [data, setData] = useState<GenerateFlagQuizReturn>(flagQuizData);
 
-  const [data, setData] = useState<GenerateQuizReturn>(quizData);
-
-  quizData && !data && setData(quizData);
+  flagQuizData && !data && setData(flagQuizData);
 
   const options: string[] | undefined =
     data &&
@@ -114,7 +116,7 @@ const CapitalQuiz = () => {
     handleIsRight(false);
     handleCounter(0);
     if (data.mainData.length > 3) {
-      setData(generateQuiz(data.mainData));
+      setData(generateFlagQuiz(data.mainData));
       setOptionFormat(generateRandomOptions());
     } else {
       navigat(0);
@@ -200,7 +202,7 @@ const CapitalQuiz = () => {
   };
 
   const handleButtonClick = () => {
-    setData(generateQuiz(data.mainData));
+    setData(generateFlagQuiz(data.mainData));
     handleIsRight(false);
     setActive({
       a: {
@@ -270,8 +272,16 @@ const CapitalQuiz = () => {
     <>
       {!(isRight === null) ? (
         <div className="w-full p-5 space-y-5">
+          <div className="w-32 h-16">
+            <img
+              className="w-32 h-16"
+              src={data.correctOption.flagUrl}
+              alt="flag"
+            />
+          </div>
+
           <h1 className="text-[#2f527b] font-bold text-lg">
-            {data?.correctOption.capital} is capital of
+            Which country does this flag belong to?
           </h1>
           <div
             className={cn("bg-transparent space-y-5", {
@@ -314,4 +324,4 @@ const CapitalQuiz = () => {
   );
 };
 
-export default CapitalQuiz;
+export default FlagQuiz;
