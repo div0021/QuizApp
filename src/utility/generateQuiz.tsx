@@ -12,6 +12,7 @@ const generateRandomNumber = (num: number): number =>
 const generateQuiz = (data: CapCountryProps[]): GenerateQuizReturn => {
   if (data.length > 3) {
     let num = generateRandomNumber(data.length);
+    data = data.filter((el) => el && el.country !== "");
 
     const quizData = data[num];
     data = data.filter(

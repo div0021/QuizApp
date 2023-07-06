@@ -272,7 +272,7 @@ const FlagQuiz = () => {
     <>
       {!(isRight === null) ? (
         <div className="w-full p-5 space-y-5">
-          <div className="w-32 h-16">
+          <div className="w-32 h-16 border border-slate-200">
             <img
               className="w-32 h-16"
               src={data.correctOption.flagUrl}

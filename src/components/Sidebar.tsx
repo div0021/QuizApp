@@ -1,4 +1,4 @@
-import {useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PagesProps } from "../App";
 import cn from "../utility/cn";
 import { MouseEvent } from "react";
@@ -24,9 +24,12 @@ const Sidebar: React.FC<SidebarProps> = ({
       navigate(id);
       return;
     }
+
     if (isRight === undefined || isRight === false || isRight === true) {
-      handleModal(true);
-      handleQuizPath(id);
+      if (location.pathname !== `/${id}`) {
+        handleModal(true);
+        handleQuizPath(id);
+      }
     } else {
       navigate(id);
       handleIsRight(undefined);
